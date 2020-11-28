@@ -1,7 +1,8 @@
 import axios from "axios";
 import contactsActions from "./contactsActions";
 
-axios.defaults.baseURL = "http://localhost:2000";
+axios.defaults.baseURL =
+  "https://my-json-server.typicode.com/vit-1982/goit-react-hw-07-phonebook";
 
 const addContact = ({ name, number }) => (dispatch, getState) => {
   const contacts = getState().contacts.items;
