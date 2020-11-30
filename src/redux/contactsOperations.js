@@ -1,5 +1,8 @@
 import axios from "axios";
+// import { v4 as uuidv4 } from "uuid";
 import contactsActions from "./contactsActions";
+
+const createId = () => Date.now();
 
 axios.defaults.baseURL =
   "https://my-json-server.typicode.com/vit-1982/goit-react-hw-07-phonebook";
@@ -7,6 +10,8 @@ axios.defaults.baseURL =
 const addContact = ({ name, number }) => (dispatch, getState) => {
   const contacts = getState().contacts.items;
   const contactNameExist = contacts.find((contact) => contact.name === name);
+  // const id = uuidv4();
+  const id = createId();
 
   dispatch(contactsActions.addContactRequest());
 
@@ -16,7 +21,7 @@ const addContact = ({ name, number }) => (dispatch, getState) => {
     return;
   }
   axios
-    .post("/contacts", { name, number })
+    .post("/contacts", { name, number, id })
     .then(({ data }) => {
       dispatch(contactsActions.addContactSuccess(data));
     })
@@ -35,6 +40,9 @@ const fetchContacts = () => (dispatch) => {
 const deleteContact = (id) => (dispatch) => {
   dispatch(contactsActions.deleteContactRequest());
 
+  // dispatch(contactsActions.deleteContactSuccess(id));
+  // dispatch(contactsActions.deleteContactError());
+  console.log(id);
   axios
     .delete(`/contacts/${id}`)
     .then(() => dispatch(contactsActions.deleteContactSuccess(id)))
